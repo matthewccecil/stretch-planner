@@ -9,6 +9,7 @@
   <script>tailwind.config = { darkMode: 'class' };</script>
   <!-- Google Fonts: Inter family -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <!-- jsPDF UMD bundle for PDF generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
@@ -117,19 +118,20 @@
                   class="w-full p-3 border border-yellow-300 rounded-xl h-28 bg-yellow-50 placeholder-gray-500 focus:ring-[#f9d22dff] focus:border-[#f9d22dff] text-black"></textarea>
       </section>
 
-      <!-- Action buttons -->
-      <section aria-labelledby="actions">
-        <button type="button" id="generateBtn" disabled
-                class="w-full bg-[#f9d22dff] dark:bg-yellow-500 hover:bg-yellow-400 text-black text-lg font-semibold px-6 py-4 rounded-2xl shadow-md transition-all">
-          <span id="generateText">✨ Generate Personalized Plan</span>
-          <!-- Spinner displayed during API call -->
-          <svg id="spinner" role="status" aria-hidden="true"
-               class="animate-spin h-5 w-5 text-black hidden ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-          </svg>
-        </button>
-      </section>
+ <!-- Action buttons -->
+<section aria-labelledby="actions">
+  <button type="button" id="generateBtn" disabled
+          class="w-full bg-[#f9d22dff] dark:bg-yellow-500 hover:bg-yellow-400 text-black text-lg font-semibold px-6 py-4 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2"
+          aria-busy="false">
+    <span id="generateText">✨ Generate Personalized Plan</span>
+    <svg id="spinner" role="status" aria-hidden="true"
+         class="hidden animate-spin h-5 w-5 text-black ml-2"
+         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+    </svg>
+  </button>
+</section>
 
       <!-- Output textarea and PDF/print buttons -->
       <section aria-labelledby="output-plan">
@@ -153,27 +155,48 @@
     // ========== Knowledge Base Guidance ==========
     // Maps each sessionType to its guiding instructions
     const knowledgeBase = {
-      "General Flexibility": "Use PNF, dynamic, and static stretches. Focus on hips, hamstrings, shoulders. Include breathing and end-range holds.",
-      "Enhanced Flexibility": "Incorporate partner-assisted stretches and progressive overload in flexibility training. Monitor range improvements weekly.",
-      "Injury Prevention": "Focus on strengthening weak links, activating stabilizers, improving joint range with control and dynamic stability drills.",
-      "Pain Relief": "Include gentle myofascial release, targeted static holds, and neuromuscular inhibition techniques for pain reduction.",
-      "Faster Recovery": "Prioritize myofascial release, dynamic mobility drills, and active recovery methods post-exertion.",
-      "Improved Posture": "Integrate thoracic mobilizations, scapular stability work, and corrective stretching for postural alignment.",
-      "Personalized Sessions": "Tailor each session based on client feedback, mobility assessments, and progress metrics.",
-      "Stress Reduction": "Use diaphragmatic breathing, slow static holds, and gentle yoga-based stretches to reduce stress.",
-      "Enhanced Athletic Performance": "Combine sport-specific dynamic mobility workflows with proprioceptive neuromuscular facilitation.",
-      "Better Circulation": "Include rhythmic active movements and gradient stretching to stimulate blood flow.",
-      "Increased Energy Levels": "Incorporate full-body dynamic warm-ups and activation sequences to boost energy.",
-      "Mind–Body Connection": "Use mindful breathing, slow holds, and visualization techniques during stretches.",
-      "Safe, Low-Impact Care": "Emphasize controlled, joint-friendly mobilizations with appropriate progressions.",
-      "Pre-Workout Activation": "Integrate dynamic mobility drills to prime target muscle groups before exercise.",
-      "Post-Workout Cool-Down": "Use static stretches and myofascial release to support recovery post-exercise.",
-      "Pain-Free Movement in Daily Life": "Customize stretches to alleviate common daily movement restrictions.",
-      "Mobility for Desk Workers": "Target hip flexors, thoracic spine, and shoulder girdle to counteract sitting.",
-      "Complementary to Physical Therapy": "Follow PT protocols with added mobility and stability enhancements.",
-      "Expertise in Movement Mechanics": "Integrate biomechanical correction and end-range stabilization in each plan.",
-      "Goal-Oriented Programming": "Set weekly improvement targets and adjust plan based on measurable outcomes.",
-      "Consistent Accountability": "Schedule regular check-ins and progress reviews to keep clients on track."
+  
+  "General Flexibility": "Incorporate a mix of PNF, dynamic, and static stretching. Focus on key areas like hips, hamstrings, and shoulders. Include breathwork and end-range holds to deepen flexibility gains.",
+  
+  "Enhanced Flexibility": "Use partner-assisted stretching and progressive intensity. Track improvements weekly and adjust protocols based on range of motion testing.",
+  
+  "Injury Prevention": "Reinforce weak points, activate stabilizing muscles, and use controlled mobility drills to enhance joint integrity and prevent strain.",
+  
+  "Pain Relief": "Employ gentle myofascial release, sustained static holds, and neuromuscular inhibition to ease discomfort and release tension.",
+  
+  "Faster Recovery": "Prioritize soft tissue work, dynamic mobility, and light movement to support recovery between sessions or workouts.",
+  
+  "Improved Posture": "Incorporate thoracic spine mobilization, scapular stabilization, and corrective flexibility to support upright alignment.",
+  
+  "Personalized Sessions": "Adapt sessions based on mobility assessments, ongoing progress, and direct client feedback to optimize outcomes.",
+  
+  "Stress Reduction": "Use diaphragmatic breathing, slow static stretching, and gentle, meditative movements to calm the nervous system.",
+  
+  "Enhanced Athletic Performance": "Blend sport-specific dynamic drills with proprioceptive neuromuscular facilitation to support explosive movement and joint control.",
+  
+  "Better Circulation": "Incorporate rhythmic full-body movements and gradient stretching patterns to promote healthy blood flow.",
+  
+  "Increased Energy Levels": "Use dynamic warm-up flows and neuromuscular activation to energize the body and prepare it for action.",
+  
+  "Mind–Body Connection": "Enhance focus and relaxation through mindful breathing, intentional pacing, and visualization during stretching.",
+  
+  "Safe, Low-Impact Care": "Deliver joint-safe, controlled mobility work with gradual progressions—ideal for all ages and experience levels.",
+  
+  "Pre-Workout Activation": "Prime key muscle groups using dynamic drills and mobility prep sequences to boost performance and reduce injury risk.",
+  
+  "Post-Workout Cool-Down": "Aid recovery and flexibility using static holds, breathwork, and targeted release techniques.",
+  
+  "Pain-Free Movement in Daily Life": "Target mobility restrictions that impact everyday activities like standing, sitting, or reaching. Customize accordingly.",
+  
+  "Mobility for Desk Workers": "Focus on hip flexor release, thoracic spine mobility, and shoulder opening to counteract prolonged sitting.",
+  
+  "Complementary to Physical Therapy": "Support rehab goals by layering in gentle mobility and joint control techniques that align with PT protocols.",
+  
+  "Expertise in Movement Mechanics": "Include biomechanically-informed corrections, stability work, and end-range control to enhance movement efficiency.",
+  
+  "Goal-Oriented Programming": "Set and review weekly flexibility and mobility goals. Adjust plans based on tangible improvements and session outcomes.",
+  
+  "Consistent Accountability": "Establish a routine with regular check-ins, reassessments, and motivational support to keep clients progressing."
     };
 
     // ========== Speech Recognition Setup ==========
