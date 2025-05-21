@@ -99,9 +99,13 @@
         </div>
         <!-- Notes textarea with voice input -->
         <div>
-          <label for="notes" class="block text-sm font-semibold mb-2">Session Notes</label>
-          <textarea id="notes" name="notes" rows="4"
-                    class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]"></textarea>
+          <label for="noteTemplate" class="block text-sm font-medium mb-1">Insert Note Template</label>
+<select id="noteTemplate" class="w-full p-2 border border-gray-300 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white">
+  <option value="">Select a template...</option>
+</select>
+<label for="notes" class="block text-sm font-semibold mb-2">Session Notes</label>
+<textarea id="notes" name="notes" rows="4"
+          class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]"></textarea>
           <!-- Mic button toggles SpeechRecognition -->
           <button type="button" id="micBtn" aria-pressed="false" aria-label="Start voice input"
                   class="mt-2 inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-xl shadow transition-all">
@@ -194,6 +198,38 @@
       warn.className = 'text-red-500 text-sm mt-2';
       document.getElementById('notes').after(warn);
     }
+    // Define session note templates
+const noteTemplates = [
+  {
+    label: "General Session",
+    value: "Client arrived on time. Reviewed progress since last session. Completed warm-up stretches, followed by customized mobility work. Client responded well. Will continue with this approach next session."
+  },
+  {
+    label: "Post-Injury Follow-up",
+    value: "Focused on gentle, low-impact stretches. Monitored pain/discomfort. Client reported improved range of motion. Advised to continue daily gentle stretches at home."
+  },
+  {
+    label: "Goal-Oriented Session",
+    value: "Set new mobility goals with client. Used PNF methods for hamstrings and hips. Client showed measurable gains. Scheduled next check-in for progress review."
+  }
+];
+
+// Populate note templates dropdown
+const noteTemplateSelect = document.getElementById('noteTemplate');
+noteTemplates.forEach(tpl => {
+  const opt = document.createElement('option');
+  opt.value = tpl.value;
+  opt.textContent = tpl.label;
+  noteTemplateSelect.appendChild(opt);
+});
+
+// On template selection, insert into notes textarea
+noteTemplateSelect.addEventListener('change', (e) => {
+  if (e.target.value) {
+    notesEl.value = e.target.value;
+    localStorage.setItem('notes', e.target.value); // Persist if needed
+  }
+});
 
     // ========== Dark Mode Persistence ==========
     document.getElementById('darkToggle').addEventListener('click', () => {
