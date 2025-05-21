@@ -115,12 +115,20 @@
         </div>
       </section>
 
-      <!-- Progress Check-Ins -->
-           <div>
-        <label for="progress" class="block font-semibold">Progress Check-Ins</label>
-        <p class="text-sm text-gray-500 mb-2">Use this section to document client improvements, challenges, or changes noted during follow-ups or future sessions.</p>
-        <textarea id="progress" name="progress" rows="4" class="w-full p-3 border border-gray-300 rounded bg-white dark:bg-gray-700 text-black dark:text-white"></textarea>
-      </div>
+     <!-- Progress Check-Ins -->
+<div>
+  <label for="progress" class="block font-semibold">Progress Check-Ins</label>
+  <p class="text-sm text-gray-500 mb-2">
+    Use this section to document client improvements, challenges, or changes noted during follow-ups or future sessions.
+  </p>
+  <!-- Dropdown for template selection -->
+  <select id="progress-template-select" class="mb-2 p-2 border rounded">
+    <option value="">Select a template...</option>
+    <option value="progress-checkin">Progress - Check-in Session</option>
+  </select>
+  <textarea id="progress" name="progress" rows="4"
+    class="w-full p-3 border border-gray-300 rounded bg-white dark:bg-gray-700 text-black dark:text-white"></textarea>
+</div>
 
       <!-- Action buttons -->
       <section aria-labelledby="actions">
@@ -287,6 +295,159 @@ const noteTemplates = [
     value: "Introduced bedtime stretching routine aimed at improving sleep quality. Client to follow routine nightly and track sleep patterns."
   }
 ];
+
+    const progressTemplates = {
+  "progress-checkin": `## Progress – iFlex Assisted Stretch Check-In
+- Assisted stretch techniques used:
+- Muscle groups targeted:
+- Client comfort level (1–10):
+- Range of motion achieved:
+- Home practice recommendations:
+- Next session focus:
+`,
+  "hamstring-assist": `## Progress – Assisted Hamstring Stretch
+- Technique (e.g. PNF hold-relax, static assist):
+- Max knee-to-chest range:
+- Client feedback on tension release:
+- Adjustments made during session:
+- At-home hamstring drills:
+`,
+  "hip-flexor-assist": `## Progress – Assisted Hip Flexor Stretch
+- Technique (e.g. lunge-assist, dynamic assist):
+- Hip extension range:
+- Comfort and release noted:
+- Breathing cues effectiveness:
+- Next hip-flexor focus:
+`,
+  "quad-assist": `## Progress – Assisted Quadriceps Stretch
+- Technique (e.g. prone pull, partner hold):
+- Knee flexion angle:
+- Client comfort feedback:
+- Foam-roller prep used:
+- Follow-up quad mobility tips:
+`,
+  "calf-assist": `## Progress – Assisted Calf Stretch
+- Technique (e.g. dorsiflexion assist, PNF):
+- Ankle dorsiflexion degrees:
+- Sensation of release:
+- Strap or partner used:
+- Home calf stretch plan:
+`,
+  "adductor-assist": `## Progress – Assisted Adductor Stretch
+- Technique (e.g. butterfly assist, side-lunge):
+- Groin openness measured:
+- Comfort vs. discomfort notes:
+- Additional support needed:
+- Inner-thigh home routine:
+`,
+  "shoulder-assist": `## Progress – Assisted Shoulder Stretch
+- Technique (e.g. doorway assist, cross-body):
+- Arm elevation range:
+- Feedback on release points:
+- Cue adjustments:
+- Shoulder stability drills:
+`,
+  "latissimus-assist": `## Progress – Assisted Latissimus Dorsi Stretch
+- Technique (e.g. overhead assist, side-bend):
+- Side-bend angle:
+- Tension release noted:
+- Client breathing quality:
+- Lat mobility homework:
+`,
+  "thoracic-twist-assist": `## Progress – Assisted Thoracic Twist
+- Technique (e.g. seated twist assist, PNF):
+- Rotation degrees:
+- Rib-cage opening feedback:
+- Cue modifications:
+- Thoracic mobility exercises:
+`,
+  "spinal-extension-assist": `## Progress – Assisted Spinal Extension
+- Technique (e.g. prone backbend assist):
+- Extension height:
+- Lumbar comfort feedback:
+- Use of bolsters or blocks:
+- Spinal strength drills:
+`,
+  "neck-stretch-assist": `## Progress – Assisted Neck Stretch
+- Technique (e.g. manual traction, side-bend assist):
+- Flexion/extension range:
+- Client relaxation rating:
+- Pressure points released:
+- At-home neck mobility tips:
+`,
+  "wrist-stretch-assist": `## Progress – Assisted Wrist & Forearm Stretch
+- Technique (e.g. palm-up/palm-down assist):
+- Wrist flexion/extension degrees:
+- Grip comfort feedback:
+- Forearm release points:
+- Daily wrist mobility plan:
+`,
+  "ankle-dorsiflexion-assist": `## Progress – Assisted Ankle Dorsiflexion
+- Technique (e.g. strap assist, partner PNF):
+- Dorsiflexion range:
+- Client comfort scale:
+- Orthotic or shoe notes:
+- Ankle strength follow-up:
+`,
+  "full-body-flow": `## Progress – Full-Body Assisted Stretch Flow
+- Sequence of stretches performed:
+- Overall relaxation feedback:
+- Total session time in each pose:
+- Client breathing synchronization:
+- Next full-body flow adjustments:
+`,
+  "pnf-advanced": `## Progress – Advanced PNF Assisted Stretch
+- PNF techniques used:
+- Hold-relax vs. contract-relax results:
+- Strength engagement feedback:
+- Range gains recorded:
+- Advanced PNF drills to practice:
+`,
+  "partner-flow-session": `## Progress – Partner Assisted Flow Session
+- Partner cues and support:
+- Synchronization effectiveness:
+- Comfort and trust feedback:
+- Flow sequence highlights:
+- Home partner stretch plan:
+`,
+  "posture-correct-assist": `## Progress – Assisted Postural Correction
+- Technique (e.g. scapular assist, thoracic mobilization):
+- Posture improvements noted:
+- Compensatory patterns still present:
+- Corrections applied:
+- At-home posture drills:
+`,
+  "lower-back-assist": `## Progress – Assisted Lower Back Release
+- Technique (e.g. child’s pose assist, lumbar traction):
+- Lumbar flexibility measured:
+- Client pain vs. relief:
+- Breathing and bracing cues:
+- Lower-back care plan:
+`,
+  "core-mobility-assist": `## Progress – Assisted Core Mobility Stretch
+- Technique (e.g. supine twist assist, oblique release):
+- Core engagement feedback:
+- Trunk rotation range:
+- Tension hotspots:
+- Core stability exercises:
+`,
+  "recovery-session": `## Progress – Recovery & Relaxation Assisted Stretch
+- Recovery techniques used (e.g. myofascial release assist):
+- Soreness reduction feedback:
+- Breathwork effectiveness:
+- Restorative position details:
+- Recovery recommendations:
+`
+};
+
+
+document.getElementById('progress-template-select').addEventListener('change', function() {
+  const selected = this.value;
+  const textarea = document.getElementById('progress');
+  if (progressTemplates[selected]) {
+    textarea.value = progressTemplates[selected];
+  }
+});
 
 // Populate note templates dropdown
 const noteTemplateSelect = document.getElementById('noteTemplate');
