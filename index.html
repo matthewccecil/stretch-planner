@@ -103,14 +103,18 @@
 <select id="noteTemplate" class="w-full p-2 border border-gray-300 rounded mb-2 bg-white dark:bg-gray-700 text-black dark:text-white">
   <option value="">Select a template...</option>
 </select>
-<label for="notes" class="block text-sm font-semibold mb-2">Session Notes</label>
-<textarea id="notes" name="notes" rows="4"
-          class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]"></textarea>
-          <!-- Mic button toggles SpeechRecognition -->
-          <button type="button" id="micBtn" aria-pressed="false" aria-label="Start voice input"
-                  class="mt-2 inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-xl shadow transition-all">
-            🎤 <span>Start Voice Input</span>
-          </button>
+<div class="flex flex-col space-y-1">
+  <label for="noteTemplate" class="block text-sm font-medium">Insert Note Template</label>
+  <select id="noteTemplate" class="w-full p-2 border border-gray-300 rounded bg-white dark:bg-gray-700 text-black dark:text-white mb-1">
+    <option value="">Select a template...</option>
+  </select>
+  <label for="notes" class="block text-sm font-semibold">Session Notes</label>
+  <textarea id="notes" name="notes" rows="5"
+    class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]"></textarea>
+  <button type="button" id="micBtn" aria-pressed="false" aria-label="Start voice input"
+    class="mt-2 inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-xl shadow transition-all">
+    🎤 <span>Start Voice Input</span>
+  </button>
         </div>
       </section>
 
