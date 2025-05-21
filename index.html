@@ -8,7 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = { darkMode: 'class' };
-  </script>
+  <//script>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <!-- jsPDF -->
@@ -26,6 +26,7 @@
     </button>
   </header>
   <main class="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-10 space-y-8 border border-[#f9d22dff]">
+    
     <section aria-labelledby="title">
       <h1 id="title" class="text-4xl font-extrabold text-center">iFlex Stretch Planner</h1>
       <p class="text-center text-gray-600 dark:text-gray-300">Create custom follow-up plans using voice notes or text input.</p>
@@ -35,18 +36,18 @@
       <div>
         <h2 id="client-info" class="sr-only">Client Information</h2>
         <label for="clientName" class="block text-sm font-semibold mb-2">Client Name</label>
-        <input id="clientName" name="clientName" type="text" required class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-[#f9d22dff] focus:border-[#f9d22dff]" placeholder="Enter full name">
+        <input id="clientName" name="clientName" type="text" required class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]" placeholder="Enter full name">
       </div>
       <div>
         <label for="clientDate" class="block text-sm font-semibold mb-2">Session Date</label>
-        <input id="clientDate" name="clientDate" type="date" required class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-[#f9d22dff] focus:border-[#f9d22dff]">
+        <input id="clientDate" name="clientDate" type="date" required class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]">
       </div>
     </section>
 
     <section aria-labelledby="session-details" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
       <div>
         <label for="sessionType" class="block text-sm font-semibold mb-2">Session Type</label>
-        <select id="sessionType" name="sessionType" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-[#f9d22dff] focus:border-[#f9d22dff]">
+        <select id="sessionType" name="sessionType" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]">
           <option>General Flexibility</option>
           <option>Athletic Recovery</option>
           <option>Injury Prevention</option>
@@ -56,7 +57,7 @@
       </div>
       <div>
         <label for="notes" class="block text-sm font-semibold mb-2">Session Notes</label>
-        <textarea id="notes" name="notes" rows="4" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-[#f9d22dff] focus:border-[#f9d22dff]" placeholder="Use the mic or type a session summary..."></textarea>
+        <textarea id="notes" name="notes" rows="4" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]" placeholder="Use the mic or type a session summary..."></textarea>
         <button id="micBtn" aria-pressed="false" aria-label="Start voice input" class="mt-2 inline-flex items-center gap-2 bg-black dark:bg-gray-700 hover:bg-gray-800 dark:hover:bg-gray-600 text-white px-4 py-2 rounded-xl shadow transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f9d22dff] btn-mic">
           🎤 <span>Start Voice Input</span>
         </button>
@@ -65,7 +66,7 @@
 
     <section aria-labelledby="progress-check-ins">
       <h2 id="progress-check-ins" class="block text-sm font-semibold mb-2">Progress Check-Ins</h2>
-      <textarea id="progress" name="progress" rows="5" class="w-full p-3 border border-yellow-300 rounded-xl h-28 bg-yellow-50 placeholder-gray-500 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]" placeholder="Add notes about client's progress or changes... (editable)"></textarea>
+      <textarea id="progress" name="progress" rows="5" class="w-full p-3 border border-yellow-300 rounded-xl h-28 bg-yellow-50 placeholder-gray-500 focus:ring-[#f9d22dff] focus:border-[#f9d22dff] text-black dark:text-gray-800" placeholder="Add notes about client's progress or changes... (editable)"></textarea>
     </section>
 
     <section aria-labelledby="actions">
@@ -80,7 +81,7 @@
 
     <section aria-labelledby="output-plan">
       <h2 id="output-plan" class="block text-sm font-semibold mb-2">Suggested Follow-Up Plan</h2>
-      <textarea id="output" rows="8" class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-2xl bg-gray-100 dark:bg-gray-700 focus:outline-none" aria-live="polite" readonly placeholder="Your AI-generated stretch plan will appear here..."></textarea>
+      <textarea id="output" rows="8" class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-2xl bg-gray-100 dark:bg-gray-700 text-black dark:text-gray-100 focus:outline-none" aria-live="polite" readonly placeholder="Your AI-generated stretch plan will appear here..."></textarea>
       <button id="savePdfBtn" disabled class="mt-4 w-full bg-black dark:bg-gray-700 hover:bg-gray-900 dark:hover:bg-gray-600 text-white font-medium py-3 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f9d22dff]">
         💾 Save Plan as PDF
       </button>
@@ -97,7 +98,20 @@
       "Low Back Relief": "Incorporate glute activation, core stability work, hamstring flexibility, and lumbar decompression techniques."
     };
 
-    // DARK MODE
+    // Initialize SpeechRecognition
+    let recognition;
+    try {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+    } catch (e) {
+      document.getElementById('micBtn').disabled = true;
+      console.warn('SpeechRecognition not supported');
+    }
+
+    // DARK MODE toggle
     document.getElementById('darkToggle').addEventListener('click', () => {
       document.documentElement.classList.toggle('dark');
     });
@@ -113,14 +127,30 @@
     clientName.addEventListener('input', validateForm);
     clientDate.addEventListener('input', validateForm);
 
-    // MIC BUTTON
-    document.getElementById('micBtn').addEventListener('click', () => {
-      const btn = document.getElementById('micBtn');
-      const listening = btn.classList.toggle('listening');
-      btn.setAttribute('aria-pressed', listening);
-      btn.querySelector('span').textContent = listening ? 'Listening…' : 'Start Voice Input';
-      // TODO: wire SpeechRecognition
+    // MIC BUTTON behavior
+    const micBtn = document.getElementById('micBtn');
+    micBtn.addEventListener('click', () => {
+      if (!recognition) return;
+      const listening = micBtn.classList.toggle('listening');
+      micBtn.setAttribute('aria-pressed', listening);
+      micBtn.querySelector('span').textContent = listening ? 'Listening…' : 'Start Voice Input';
+      if (listening) recognition.start(); else recognition.stop();
     });
+
+    // SpeechRecognition result handler
+    if (recognition) {
+      let finalTranscript = '';
+      recognition.onresult = (event) => {
+        let interimTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) finalTranscript += transcript;
+          else interimTranscript += transcript;
+        }
+        document.getElementById('notes').value = finalTranscript + interimTranscript;
+      };
+      recognition.onend = () => micBtn.classList.contains('listening') && recognition.start();
+    }
 
     // GENERATE PLAN
     generateBtn.addEventListener('click', async () => {
@@ -132,7 +162,6 @@
       const output = document.getElementById('output');
 
       output.value = "Generating your customized 12-month iFlex stretch therapy plan...";
-
       const guidance = knowledgeBase[sessionType] || "";
 
       generateBtn.disabled = true;
@@ -146,10 +175,7 @@
         const formattedDate = isNaN(date) ? '' : date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         const res = await fetch('/api/generate-plan', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            sessionType,
-            notes: `You are a certified stretch therapist at iFlex. Use the following guidance for '${sessionType}': ${guidance}. Based on therapist notes '${noteText}', progress notes '${progress}', client name '${name}', and session date '${formattedDate}', generate a detailed 12-month personalized plan for this client. Structure the plan by weeks (Week 1 through Week 52), showing what the client will experience each week during their in-person stretch therapy sessions. Be specific about stretch types, mobility goals, and how progression is tracked over time. Each week should have a purpose and a checkpoint. Keep the tone friendly, professional, and educational, as if this will be shared with the client directly.`
-          })
+          body: JSON.stringify({ sessionType, notes: `You are a certified stretch therapist at iFlex. Use the following guidance for '${sessionType}': ${guidance}. Based on therapist notes '${noteText}', progress notes '${progress}', client name '${name}', and session date '${formattedDate}', generate a detailed 12-month personalized plan for this client. Structure the plan by weeks (Week 1 through Week 52), showing what the client will experience each week during their in-person stretch therapy sessions. Be specific about stretch types, mobility goals, and how progression is tracked over time. Each week should have a purpose and a checkpoint. Keep the tone friendly, professional, and educational, as if this will be shared with the client directly.` })
         });
         const data = await res.json();
         output.value = data.plan || 'Error generating plan.';
@@ -169,48 +195,25 @@
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ unit: 'pt' });
       const name = clientName.value;
-      const date = new Date(clientDate.value).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      const date = new Date(clientDate.value).toLocaleDateString('en-US',{ year:'numeric',month:'long',day:'numeric'});
       const progress = document.getElementById('progress').value;
       const plan = document.getElementById('output').value;
 
       doc.setFontSize(16);
-      doc.text('iFlex Stretch Plan', 40, 40);
+      doc.text('iFlex Stretch Plan', 40,40);
       doc.setFontSize(12);
-      doc.text(`Client: ${name}`, 40, 60);
-      doc.text(`Date: ${date}`, 40, 76);
+      doc.text(`Client: ${name}`,40,60);
+      doc.text(`Date: ${date}`,40,76);
 
-      let y = 100;
-      if (progress) {
-        doc.setFontSize(12);
-        doc.text('Progress Notes:', 40, y);
-        y += 16;
-        doc.setFontSize(10);
-        const lines = doc.splitTextToSize(progress, 500);
-        doc.text(lines, 40, y);
-        y += lines.length * 14 + 10;
-      }
-
-      doc.setFontSize(12);
-      doc.text('Plan:', 40, y);
-      y += 16;
-      doc.setFontSize(10);
-      const planLines = doc.splitTextToSize(plan, 500);
-      doc.text(planLines, 40, y);
-
-      doc.save(`iFlex_Stretch_Plan_${name.replace(/\s+/g, '_')}.pdf`);
+      let y=100;
+      if(progress){doc.setFontSize(12);doc.text('Progress Notes:',40,y);y+=16;doc.setFontSize(10);const lines=doc.splitTextToSize(progress,500);doc.text(lines,40,y);y+=lines.length*14+10;}      
+      doc.setFontSize(12);doc.text('Plan:',40,y);y+=16;doc.setFontSize(10);const planLines=doc.splitTextToSize(plan,500);doc.text(planLines,40,y);
+      doc.save(`iFlex_Stretch_Plan_${name.replace(/\s+/g,'_')}.pdf`);
     });
 
     // LOAD & PERSIST
-    window.onload = () => {
-      ['clientName', 'clientDate', 'progress'].forEach(id => {
-        const val = localStorage.getItem(id);
-        if (val) document.getElementById(id).value = val;
-      });
-      validateForm();
-    };
-    ['clientName', 'clientDate', 'progress'].forEach(id => {
-      document.getElementById(id).addEventListener('input', e => localStorage.setItem(id, e.target.value));
-    });
+    window.onload=()=>{['clientName','clientDate','progress'].forEach(id=>{const val=localStorage.getItem(id);if(val)document.getElementById(id).value=val});validateForm()};
+    ['clientName','clientDate','progress'].forEach(id=>{document.getElementById(id).addEventListener('input',e=>localStorage.setItem(id,e.target.value))});
   </script>
 </body>
 </html>
