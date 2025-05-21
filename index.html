@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stretch Session Planner</title>
+  <title>iFlex Stretch Session Planner</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -13,17 +13,17 @@
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-blue-100 via-green-100 to-white min-h-screen p-6">
-  <div class="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl p-10 space-y-8">
+<body class="bg-gradient-to-br from-white via-green-50 to-blue-50 min-h-screen p-6">
+  <div class="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl p-10 space-y-8">
     <div class="text-center">
-      <h1 class="text-4xl font-extrabold text-green-700">iFlex AI Stretch Planner</h1>
-      <p class="text-gray-500 mt-2">Generate expert follow-up plans instantly from voice or typed notes.</p>
+      <h1 class="text-4xl font-extrabold text-[#1C6B6D]">iFlex Stretch Planner</h1>
+      <p class="text-[#4D4D4D] mt-2">Create custom follow-up plans using voice notes or text input.</p>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-      <div class="col-span-1">
+      <div>
         <label for="sessionType" class="block text-sm font-semibold mb-2">Session Type</label>
-        <select id="sessionType" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-green-500 focus:border-green-500">
+        <select id="sessionType" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-[#1C6B6D] focus:border-[#1C6B6D]">
           <option>General Flexibility</option>
           <option>Athletic Recovery</option>
           <option>Injury Prevention</option>
@@ -32,18 +32,22 @@
         </select>
       </div>
 
-      <div class="col-span-1">
+      <div>
         <label for="notes" class="block text-sm font-semibold mb-2">Session Notes</label>
-        <textarea id="notes" class="w-full p-3 border border-gray-300 rounded-xl h-32 focus:ring-blue-400 focus:border-blue-400" placeholder="Use the mic or type a session summary..."></textarea>
-        <button id="micBtn" class="mt-2 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow">
-          🎤 <span>Use Voice Input</span>
+        <textarea id="notes" class="w-full p-3 border border-gray-300 rounded-xl h-32 focus:ring-[#1C6B6D] focus:border-[#1C6B6D]" placeholder="Use the mic or type a session summary..."></textarea>
+        <button id="micBtn" class="mt-2 inline-flex items-center gap-2 bg-[#1C6B6D] hover:bg-[#155558] text-white px-4 py-2 rounded-xl shadow transition-all">
+          🎤 <span>Start Voice Input</span>
         </button>
       </div>
     </div>
 
     <div>
-      <button id="generateBtn" class="w-full bg-green-600 hover:bg-green-700 text-white text-lg font-semibold px-6 py-4 rounded-2xl shadow-lg transition-all">
-        ✨ Generate Personalized Plan
+      <button id="generateBtn" class="w-full bg-[#28A17D] hover:bg-[#21886B] text-white text-lg font-semibold px-6 py-4 rounded-2xl shadow-md transition-all flex justify-center items-center gap-2">
+        <span id="generateText">✨ Generate Personalized Plan</span>
+        <svg id="spinner" class="animate-spin h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+        </svg>
       </button>
     </div>
 
@@ -70,16 +74,33 @@
     document.getElementById("generateBtn").addEventListener("click", async function () {
       const sessionType = document.getElementById("sessionType").value;
       const notes = document.getElementById("notes").value;
+      const generateText = document.getElementById("generateText");
+      const spinner = document.getElementById("spinner");
+      const output = document.getElementById("output");
 
-      const res = await fetch("/api/generate-plan", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionType, notes })
-      });
+      generateText.classList.add("hidden");
+      spinner.classList.remove("hidden");
+      output.value = "Generating your 12-month stretch therapy plan...";
 
-      const data = await res.json();
-      document.getElementById("output").value = data.plan || "Error generating plan.";
+      try {
+        const res = await fetch("/api/generate-plan", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sessionType,
+            notes: `Create a detailed, iFlex-branded 12-month stretch therapy plan. The client had a session categorized as '${sessionType}'. Notes from therapist: ${notes}. Include what will be done each week to improve flexibility, mobility, or recovery, with emphasis on how continued weekly sessions with a stretch therapist at iFlex will help.`
+          })
+        });
+
+        const data = await res.json();
+        output.value = data.plan || "Error generating plan.";
+      } catch (e) {
+        output.value = "Error generating plan.";
+      } finally {
+        generateText.classList.remove("hidden");
+        spinner.classList.add("hidden");
+      }
     });
   </script>
 </body>
-</html>
+</html
