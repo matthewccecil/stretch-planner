@@ -13,8 +13,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', sans-serif; }
-    /* Mic listening animation */
-    .btn-mic.listening { @apply bg-yellow-200 text-black animate-pulse; }
   </style>
 </head>
 <body class="bg-white text-black dark:bg-gray-900 dark:text-gray-100 min-h-screen p-6">
@@ -24,15 +22,12 @@
       Toggle Dark Mode
     </button>
   </header>
-
   <main class="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-10 space-y-8 border border-[#f9d22dff]">
     <section aria-labelledby="title">
       <h1 id="title" class="text-4xl font-extrabold text-center">iFlex Stretch Planner</h1>
-      <p class="text-center text-gray-600 dark:text-gray-300">Create custom follow-up plans using voice notes or text input.</p>
+      <p class="text-center text-gray-600 dark:text-gray-300">Create custom 12-month follow-up plans using voice notes or text input.</p>
     </section>
-
     <form id="plannerForm" class="space-y-8">
-      <!-- Client & Therapist Info -->
       <section aria-labelledby="client-info" class="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div>
           <label for="clientName" class="block text-sm font-semibold mb-2">Client Name</label>
@@ -50,8 +45,6 @@
           </select>
         </div>
       </section>
-
-      <!-- Session Details -->
       <section aria-labelledby="session-details" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <label for="sessionType" class="block text-sm font-semibold mb-2">Session Type</label>
@@ -66,21 +59,17 @@
         <div>
           <label for="notes" class="block text-sm font-semibold mb-2">Session Notes</label>
           <textarea id="notes" name="notes" rows="4" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]" placeholder="Use the mic or type a session summary..."></textarea>
-          <button id="micBtn" aria-pressed="false" aria-label="Start voice input" class="mt-2 inline-flex items-center gap-2 bg-black dark:bg-gray-700 hover:bg-gray-800 dark:hover:bg-gray-600 text-white px-4 py-2 rounded-xl shadow transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f9d22dff] btn-mic">
+          <button type="button" id="micBtn" aria-pressed="false" aria-label="Start voice input" class="mt-2 inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-xl shadow transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f9d22dff]">
             🎤 <span>Start Voice Input</span>
           </button>
         </div>
       </section>
-
-      <!-- Progress Check-Ins -->
       <section aria-labelledby="progress-check-ins">
         <h2 id="progress-check-ins" class="block text-sm font-semibold mb-2">Progress Check-Ins</h2>
         <textarea id="progress" name="progress" rows="5" class="w-full p-3 border border-yellow-300 rounded-xl h-28 bg-yellow-50 placeholder-gray-500 focus:ring-[#f9d22dff] focus:border-[#f9d22dff] text-black dark:text-gray-800" placeholder="Add notes about client's progress or changes... (editable)"></textarea>
       </section>
-
-      <!-- Actions -->
       <section aria-labelledby="actions">
-        <button id="generateBtn" disabled class="w-full bg-[#f9d22dff] dark:bg-yellow-500 hover:bg-yellow-400 text-black text-lg font-semibold px-6 py-4 rounded-2xl shadow-md transition-all flex justify-center items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f9d22dff]" aria-busy="false">
+        <button type="button" id="generateBtn" disabled class="w-full bg-[#f9d22dff] dark:bg-yellow-500 hover:bg-yellow-400 text-black text-lg font-semibold px-6 py-4 rounded-2xl shadow-md transition-all flex justify-center items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f9d22dff]" aria-busy="false">
           <span id="generateText">✨ Generate Personalized Plan</span>
           <svg id="spinner" role="status" aria-hidden="true" class="animate-spin h-5 w-5 text-black hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -88,18 +77,15 @@
           </svg>
         </button>
       </section>
-
-      <!-- Output Plan -->
       <section aria-labelledby="output-plan">
         <h2 id="output-plan" class="block text-sm font-semibold mb-2">Suggested Follow-Up Plan</h2>
         <textarea id="output" rows="8" class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-2xl bg-gray-100 dark:bg-gray-700 text-black dark:text-gray-100 focus:outline-none" aria-live="polite" readonly placeholder="Your AI-generated stretch plan will appear here..."></textarea>
-        <button id="savePdfBtn" disabled class="mt-4 w-full bg-black dark:bg-gray-700 hover:bg-gray-900 dark:hover:bg-gray-600 text-white font-medium py-3 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f9d22dff]">
+        <button type="button" id="savePdfBtn" disabled class="mt-4 w-full bg-black dark:bg-gray-700 hover:bg-gray-900 dark:hover:bg-gray-600 text-white font-medium py-3 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f9d22dff]">
           💾 Save Plan as PDF
         </button>
       </section>
     </form>
   </main>
-
   <script>
     // Knowledge base guidance
     const knowledgeBase = {
@@ -109,7 +95,6 @@
       "Post-Surgery Rehab": "Begin with passive and assisted ROM, progress gradually to active mobility. Follow 4-week cycles and adjust based on medical clearance.",
       "Low Back Relief": "Incorporate glute activation, core stability work, hamstring flexibility, and lumbar decompression techniques."
     };
-
     // SpeechRecognition setup
     let recognition;
     try {
@@ -122,25 +107,19 @@
       document.getElementById('micBtn').disabled = true;
       console.warn('SpeechRecognition not supported');
     }
-
-    // Dark mode toggle with persistence
-    const darkToggle = document.getElementById('darkToggle');
-    darkToggle.addEventListener('click', () => {
+    // Dark mode toggle
+    document.getElementById('darkToggle').addEventListener('click', () => {
       const isDark = document.documentElement.classList.toggle('dark');
       localStorage.setItem('darkMode', isDark);
     });
     window.addEventListener('DOMContentLoaded', () => {
-      if (localStorage.getItem('darkMode') === 'true') {
-        document.documentElement.classList.add('dark');
-      }
-      // Load persisted inputs
+      if (localStorage.getItem('darkMode') === 'true') document.documentElement.classList.add('dark');
       ['clientName','clientDate','therapistName','progress'].forEach(id => {
         const val = localStorage.getItem(id);
         if (val) document.getElementById(id).value = val;
       });
       validateForm();
     });
-
     // Form validation & persistence
     const clientName = document.getElementById('clientName');
     const clientDate = document.getElementById('clientDate');
@@ -156,15 +135,22 @@
         validateForm();
       });
     });
-
-    // Mic button behavior
-    const micBtn = document.getElementById('micBtn');
-    micBtn.addEventListener('click', () => {
+    // Microphone behavior
+    const micBtnEl = document.getElementById('micBtn');
+    micBtnEl.addEventListener('click', () => {
       if (!recognition) return;
-      const listening = micBtn.classList.toggle('listening');
-      micBtn.setAttribute('aria-pressed', listening);
-      micBtn.querySelector('span').textContent = listening ? 'Listening…' : 'Start Voice Input';
-      listening ? recognition.start() : recognition.stop();
+      const listening = micBtnEl.classList.toggle('listening');
+      micBtnEl.setAttribute('aria-pressed', listening);
+      micBtnEl.querySelector('span').textContent = listening ? 'Listening…' : 'Start Voice Input';
+      if (listening) {
+        micBtnEl.classList.add('bg-yellow-200','text-black','animate-pulse');
+        micBtnEl.classList.remove('bg-black','text-white');
+        recognition.start();
+      } else {
+        micBtnEl.classList.remove('bg-yellow-200','text-black','animate-pulse');
+        micBtnEl.classList.add('bg-black','text-white');
+        recognition.stop();
+      }
     });
     if (recognition) {
       let finalTranscript = '';
@@ -176,54 +162,39 @@
         }
         document.getElementById('notes').value = finalTranscript + interimTranscript;
       };
-      recognition.onend = () => { if (micBtn.classList.contains('listening')) recognition.start(); };
+      recognition.onend = () => {
+        if (micBtnEl.classList.contains('listening')) recognition.start();
+      };
     }
-
-    // Helper: convert image URL to data URL
-    function getImageDataUrl(url) {
-      return new Promise((resolve, reject) => {
-        const img = new Image(); img.crossOrigin = 'anonymous';
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          canvas.width = img.width; canvas.height = img.height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0);
-          resolve(canvas.toDataURL('image/png'));
-        };
-        img.onerror = reject;
-        img.src = url;
-      });
-    }
-
-    // Generate plan
+    // Generate 12-month plan
     document.getElementById('generateBtn').addEventListener('click', async () => {
       const sessionType = document.getElementById('sessionType').value;
       const noteText = document.getElementById('notes').value;
       const name = clientName.value;
+      const therapist = therapistName.value;
       const dateRaw = clientDate.value;
+      const formattedDate = isNaN(new Date(dateRaw)) ? '' : new Date(dateRaw).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
       const progress = document.getElementById('progress').value;
       const output = document.getElementById('output');
-      output.value = "Generating your customized 12-...";
+      output.value = "Generating your customized 12-month iFlex stretch therapy plan...";
       const guidance = knowledgeBase[sessionType] || '';
       generateBtn.disabled = true; savePdfBtn.disabled = true;
       generateBtn.setAttribute('aria-busy','true');
       document.getElementById('generateText').classList.add('hidden');
       document.getElementById('spinner').classList.remove('hidden');
       try {
-        const date = isNaN(new Date(dateRaw)) ? '' 
-          : new Date(dateRaw).toLocaleDateString('en-US',{ year:'numeric',month:'long',day:'numeric'});
         const res = await fetch('/api/generate-plan', {
-          method:'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({ sessionType, notes:`You are a certified stretch therapist...`,
-            /* trimmed for brevity */
+          method: 'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ sessionType, notes:
+            `You are a certified stretch therapist at iFlex. Use guidance for '${sessionType}': ${guidance}. Based on notes '${noteText}', progress '${progress}', client '${name}', therapist '${therapist}', and session date '${formattedDate}', generate a detailed 12-month plan structured by weeks (Week 1 through Week 52), specifying stretch types, mobility goals, and checkpoints. Keep a friendly, professional tone.`
           })
         });
         const data = await res.json();
         output.value = data.plan || 'Error generating plan.';
         if (data.plan) savePdfBtn.disabled = false;
-      } catch (e) {
-        console.error(e);
-        output.value = '❗️ Uh-oh—couldn’t generate your plan.';
+      } catch (err) {
+        console.error(err);
+        output.value = '❗️ Couldn’t generate your plan. Try again later.';
       } finally {
         generateBtn.disabled = false;
         generateBtn.setAttribute('aria-busy','false');
@@ -231,40 +202,50 @@
         document.getElementById('spinner').classList.add('hidden');
       }
     });
-
-    // Save PDF with logo, pagination, and signature
-    savePdfBtn.addEventListener('click', async () => {
+    // PDF export with logo, pagination, therapist signature
+    document.getElementById('savePdfBtn').addEventListener('click', async () => {
       const { jsPDF } = await import('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
       const doc = new jsPDF({ unit:'pt', format:'letter' });
       const pw = doc.internal.pageSize.getWidth();
       const ph = doc.internal.pageSize.getHeight();
       const m = 40; const lh = 14;
       // Logo
-      const logoUrl = 'https://res.cloudinary.com/.../iflex_logo_publish_defngt.png';
+      const logoUrl = 'https://res.cloudinary.com/dn1saqddq/image/upload/c_thumb,w_200,g_face/v1747813392/iflex_logo_publish_defngt.png';
       const imgData = await getImageDataUrl(logoUrl);
-      const prop = doc.getImageProperties(imgData);
-      const w = 100; const h = (prop.height*w)/prop.width;
+      const props = doc.getImageProperties(imgData);
+      const w = 100; const h = (props.height*w)/props.width;
       doc.addImage(imgData,'PNG',(pw-w)/2,m,w,h);
       let y = m + h + 20;
-      // Header info
+      // Header
       doc.setFontSize(16).text('iFlex Stretch Plan',m,y); y+=22;
       doc.setFontSize(12).text(`Client: ${clientName.value}`,m,y); y+=16;
-      doc.text(`Date: ${new Date(clientDate.value).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}`,m,y); y+=24;
+      doc.text(`Date: ${new Date(clientDate.value).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}`,m,y); y+=16;
+      doc.text(`Therapist: ${therapistName.value}`,m,y); y+=24;
       // Progress
       if (document.getElementById('progress').value) {
         doc.text('Progress Notes:',m,y); y+=16;
         const lines = doc.splitTextToSize(document.getElementById('progress').value,pw-2*m);
-        lines.forEach(line=>{ if(y+lh>ph-m){doc.addPage();y=m;} doc.text(line,m,y); y+=lh; }); y+=20;
+        lines.forEach(line => { if (y+lh>ph-m) {doc.addPage(); y=m;} doc.text(line,m,y); y+=lh; }); y+=20;
       }
       // Plan
       doc.text('Plan:',m,y); y+=16;
       const planLines = doc.splitTextToSize(document.getElementById('output').value,pw-2*m);
-      planLines.forEach(line=>{ if(y+lh>ph-m){doc.addPage();y=m;} doc.text(line,m,y); y+=lh; });
-      y+=20;
-      // Therapist signature
-      doc.text(`Therapist: ${therapistName.value}`,m,y);
+      planLines.forEach(line => { if (y+lh>ph-m) {doc.addPage(); y=m;} doc.text(line,m,y); y+=lh; });
       doc.save(`iFlex_Stretch_Plan_${clientName.value.replace(/\s+/g,'_')}.pdf`);
     });
+    // Helper to load image
+    async function getImageDataUrl(url) {
+      return new Promise((res, rej) => {
+        const img = new Image(); img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+          c.getContext('2d').drawImage(img,0,0);
+          res(c.toDataURL('image/png'));
+        };
+        img.onerror = rej;
+        img.src = url;
+      });
+    }
   </script>
 </body>
 </html>
