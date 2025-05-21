@@ -1,0 +1,85 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stretch Session Planner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-blue-100 via-green-100 to-white min-h-screen p-6">
+  <div class="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl p-10 space-y-8">
+    <div class="text-center">
+      <h1 class="text-4xl font-extrabold text-green-700">iFlex AI Stretch Planner</h1>
+      <p class="text-gray-500 mt-2">Generate expert follow-up plans instantly from voice or typed notes.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div class="col-span-1">
+        <label for="sessionType" class="block text-sm font-semibold mb-2">Session Type</label>
+        <select id="sessionType" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-green-500 focus:border-green-500">
+          <option>General Flexibility</option>
+          <option>Athletic Recovery</option>
+          <option>Injury Prevention</option>
+          <option>Post-Surgery Rehab</option>
+          <option>Low Back Relief</option>
+        </select>
+      </div>
+
+      <div class="col-span-1">
+        <label for="notes" class="block text-sm font-semibold mb-2">Session Notes</label>
+        <textarea id="notes" class="w-full p-3 border border-gray-300 rounded-xl h-32 focus:ring-blue-400 focus:border-blue-400" placeholder="Use the mic or type a session summary..."></textarea>
+        <button id="micBtn" class="mt-2 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow">
+          🎤 <span>Use Voice Input</span>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <button id="generateBtn" class="w-full bg-green-600 hover:bg-green-700 text-white text-lg font-semibold px-6 py-4 rounded-2xl shadow-lg transition-all">
+        ✨ Generate Personalized Plan
+      </button>
+    </div>
+
+    <div>
+      <label for="output" class="block text-sm font-semibold mb-2">Suggested Follow-Up Plan</label>
+      <textarea id="output" class="w-full p-4 border border-gray-300 rounded-2xl h-56 bg-gray-50 focus:outline-none" readonly placeholder="Your AI-generated stretch plan will appear here..."></textarea>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("micBtn").addEventListener("click", function () {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) return alert("Your browser doesn't support voice recognition.");
+
+      const recognition = new SpeechRecognition();
+      recognition.lang = "en-US";
+      recognition.onresult = (event) => {
+        document.getElementById("notes").value += event.results[0][0].transcript + " ";
+      };
+      recognition.onerror = (event) => alert("Voice error: " + event.error);
+      recognition.start();
+    });
+
+    document.getElementById("generateBtn").addEventListener("click", async function () {
+      const sessionType = document.getElementById("sessionType").value;
+      const notes = document.getElementById("notes").value;
+
+      const res = await fetch("/api/generate-plan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionType, notes })
+      });
+
+      const data = await res.json();
+      document.getElementById("output").value = data.plan || "Error generating plan.";
+    });
+  </script>
+</body>
+</html>
