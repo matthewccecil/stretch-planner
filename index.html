@@ -8,7 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = { darkMode: 'class' };
-  <//script>
+  </script>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <!-- jsPDF -->
@@ -26,7 +26,6 @@
     </button>
   </header>
   <main class="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-10 space-y-8 border border-[#f9d22dff]">
-    
     <section aria-labelledby="title">
       <h1 id="title" class="text-4xl font-extrabold text-center">iFlex Stretch Planner</h1>
       <p class="text-center text-gray-600 dark:text-gray-300">Create custom follow-up plans using voice notes or text input.</p>
@@ -34,7 +33,6 @@
 
     <section aria-labelledby="client-info" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
       <div>
-        <h2 id="client-info" class="sr-only">Client Information</h2>
         <label for="clientName" class="block text-sm font-semibold mb-2">Client Name</label>
         <input id="clientName" name="clientName" type="text" required class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]" placeholder="Enter full name">
       </div>
@@ -134,7 +132,7 @@
       const listening = micBtn.classList.toggle('listening');
       micBtn.setAttribute('aria-pressed', listening);
       micBtn.querySelector('span').textContent = listening ? 'Listening…' : 'Start Voice Input';
-      if (listening) recognition.start(); else recognition.stop();
+      listening ? recognition.start() : recognition.stop();
     });
 
     // SpeechRecognition result handler
@@ -144,8 +142,7 @@
         let interimTranscript = '';
         for (let i = event.resultIndex; i < event.results.length; ++i) {
           const transcript = event.results[i][0].transcript;
-          if (event.results[i].isFinal) finalTranscript += transcript;
-          else interimTranscript += transcript;
+          event.results[i].isFinal ? finalTranscript += transcript : interimTranscript += transcript;
         }
         document.getElementById('notes').value = finalTranscript + interimTranscript;
       };
@@ -179,7 +176,7 @@
         });
         const data = await res.json();
         output.value = data.plan || 'Error generating plan.';
-        if (data.plan) savePdfBtn.disabled = false;
+        data.plan && (savePdfBtn.disabled = false);
       } catch (e) {
         output.value = 'Error generating plan.';
       } finally {
@@ -190,30 +187,52 @@
       }
     });
 
-    // SAVE PDF
+    // SAVE PDF
     savePdfBtn.addEventListener('click', () => {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ unit: 'pt' });
       const name = clientName.value;
-      const date = new Date(clientDate.value).toLocaleDateString('en-US',{ year:'numeric',month:'long',day:'numeric'});
+      const date = new Date(clientDate.value).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
       const progress = document.getElementById('progress').value;
       const plan = document.getElementById('output').value;
 
       doc.setFontSize(16);
-      doc.text('iFlex Stretch Plan', 40,40);
+      doc.text('iFlex Stretch Plan', 40, 40);
       doc.setFontSize(12);
-      doc.text(`Client: ${name}`,40,60);
-      doc.text(`Date: ${date}`,40,76);
+      doc.text(`Client: ${name}`, 40, 60);
+      doc.text(`Date: ${date}`, 40, 76);
 
-      let y=100;
-      if(progress){doc.setFontSize(12);doc.text('Progress Notes:',40,y);y+=16;doc.setFontSize(10);const lines=doc.splitTextToSize(progress,500);doc.text(lines,40,y);y+=lines.length*14+10;}      
-      doc.setFontSize(12);doc.text('Plan:',40,y);y+=16;doc.setFontSize(10);const planLines=doc.splitTextToSize(plan,500);doc.text(planLines,40,y);
-      doc.save(`iFlex_Stretch_Plan_${name.replace(/\s+/g,'_')}.pdf`);
+      let y = 100;
+      if (progress) {
+        doc.setFontSize(12);
+        doc.text('Progress Notes:', 40, y);
+        y += 16;
+        doc.setFontSize(10);
+        const lines = doc.splitTextToSize(progress, 500);
+        doc.text(lines, 40, y);
+        y += lines.length * 14 + 10;
+      }
+      doc.setFontSize(12);
+      doc.text('Plan:', 40, y);
+      y += 16;
+      doc.setFontSize(10);
+      const planLines = doc.splitTextToSize(plan, 500);
+      doc.text(planLines, 40, y);
+
+      doc.save(`iFlex_Stretch_Plan_${name.replace(/\s+/g, '_')}.pdf`);
     });
 
-    // LOAD & PERSIST
-    window.onload=()=>{['clientName','clientDate','progress'].forEach(id=>{const val=localStorage.getItem(id);if(val)document.getElementById(id).value=val});validateForm()};
-    ['clientName','clientDate','progress'].forEach(id=>{document.getElementById(id).addEventListener('input',e=>localStorage.setItem(id,e.target.value))});
+    // LOAD & PERSIST
+    window.addEventListener('DOMContentLoaded', () => {
+      ['clientName','clientDate','progress'].forEach(id => {
+        const val = localStorage.getItem(id);
+        if (val) document.getElementById(id).value = val;
+      });
+      validateForm();
+    });
+    ['clientName','clientDate','progress'].forEach(id => {
+      document.getElementById(id).addEventListener('input', e => localStorage.setItem(id, e.target.value));
+    });
   </script>
 </body>
 </html>
