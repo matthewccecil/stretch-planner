@@ -1,55 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>iFlex Stretch Planner</title>
-  <!-- Tailwind CSS -->
+  <!-- Tailwind CSS: utility-first styling framework -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = { darkMode: 'class' };
-  </script>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' };</script>
+  <!-- Google Fonts: Inter family -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- jsPDF UMD bundle for PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
+    /* Ensure consistent font across browsers */
     body { font-family: 'Inter', sans-serif; }
   </style>
 </head>
 <body class="bg-white text-black dark:bg-gray-900 dark:text-gray-100 min-h-screen p-6">
+
+  <!-- Header: logo + dark mode toggle -->
   <header class="max-w-3xl mx-auto flex justify-between items-center mb-6">
-    <img src="https://res.cloudinary.com/dn1saqddq/image/upload/c_thumb,w_200,g_face/v1747813392/iflex_logo_publish_defngt.png" alt="iFlex Logo" class="h-12">
-    <button id="darkToggle" class="px-4 py-2 rounded-full border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f9d22dff]">
+    <img src="https://res.cloudinary.com/dn1saqddq/image/upload/c_thumb,w_200,g_face/v1747813392/iflex_logo_publish_defngt.png"
+         alt="iFlex Logo" class="h-12" />
+    <button id="darkToggle"
+            class="px-4 py-2 rounded-full border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f9d22dff]">
       Toggle Dark Mode
     </button>
   </header>
+
+  <!-- Main container: form and output -->
   <main class="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-10 space-y-8 border border-[#f9d22dff]">
     <section aria-labelledby="title">
       <h1 id="title" class="text-4xl font-extrabold text-center">iFlex Stretch Planner</h1>
-      <p class="text-center text-gray-600 dark:text-gray-300">Create custom 12-month follow-up plans using voice notes or text input.</p>
+      <p class="text-center text-gray-600 dark:text-gray-300">
+        Create custom 12-month follow-up plans using voice notes or text input.
+      </p>
     </section>
+
+    <!-- Planner form -->
     <form id="plannerForm" class="space-y-8">
+
+      <!-- Client Info fields -->
       <section aria-labelledby="client-info" class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <!-- Client Name -->
         <div>
           <label for="clientName" class="block text-sm font-semibold mb-2">Client Name</label>
-          <input id="clientName" name="clientName" type="text" required class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]">
+          <input id="clientName" name="clientName" type="text" required
+                 class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]" />
         </div>
+        <!-- Session Date -->
         <div>
           <label for="clientDate" class="block text-sm font-semibold mb-2">Session Date</label>
-          <input id="clientDate" name="clientDate" type="date" required class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]">
+          <input id="clientDate" name="clientDate" type="date" required
+                 class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]" />
         </div>
+        <!-- Therapist selection -->
         <div>
           <label for="therapistName" class="block text-sm font-semibold mb-2">Stretch Therapist</label>
-          <select id="therapistName" name="therapistName" required class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]">
+          <select id="therapistName" name="therapistName" required
+                  class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]">
             <option value="">Select</option>
-            <option value="Austin Martinez">Austin Martinez</option>
-            <option value="Verdine Baker">Verdine Baker</option>
+            <option>Austin Martinez</option>
+            <option>Verdine Baker</option>
           </select>
         </div>
       </section>
+
+      <!-- Session Details and Notes -->
       <section aria-labelledby="session-details" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Session Type dropdown -->
         <div>
           <label for="sessionType" class="block text-sm font-semibold mb-2">Session Type</label>
-          <select id="sessionType" name="sessionType" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]">
+          <select id="sessionType" name="sessionType"
+                  class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]">
+            <!-- All 21 options covered with matching guidance keys -->
             <option>General Flexibility</option>
             <option>Enhanced Flexibility</option>
             <option>Injury Prevention</option>
@@ -73,99 +97,154 @@
             <option>Consistent Accountability</option>
           </select>
         </div>
+        <!-- Notes textarea with voice input -->
         <div>
           <label for="notes" class="block text-sm font-semibold mb-2">Session Notes</label>
-          <textarea id="notes" name="notes" rows="4" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]"></textarea>
-          <button type="button" id="micBtn" aria-pressed="false" aria-label="Start voice input" class="mt-2 inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-xl shadow transition-all">
+          <textarea id="notes" name="notes" rows="4"
+                    class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-black dark:text-gray-100 focus:ring-[#f9d22dff] focus:border-[#f9d22dff]"></textarea>
+          <!-- Mic button toggles SpeechRecognition -->
+          <button type="button" id="micBtn" aria-pressed="false" aria-label="Start voice input"
+                  class="mt-2 inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-xl shadow transition-all">
             🎤 <span>Start Voice Input</span>
           </button>
         </div>
       </section>
+
+      <!-- Progress Check-Ins -->
       <section aria-labelledby="progress-check-ins">
         <h2 id="progress-check-ins" class="block text-sm font-semibold mb-2">Progress Check-Ins</h2>
-        <textarea id="progress" name="progress" rows="5" class="w-full p-3 border border-yellow-300 rounded-xl h-28 bg-yellow-50 placeholder-gray-500 focus:ring-[#f9d22dff] focus:border-[#f9d22dff] text-black"></textarea>
+        <textarea id="progress" name="progress" rows="5"
+                  class="w-full p-3 border border-yellow-300 rounded-xl h-28 bg-yellow-50 placeholder-gray-500 focus:ring-[#f9d22dff] focus:border-[#f9d22dff] text-black"></textarea>
       </section>
+
+      <!-- Action buttons -->
       <section aria-labelledby="actions">
-        <button type="button" id="generateBtn" disabled class="w-full bg-[#f9d22dff] dark:bg-yellow-500 hover:bg-yellow-400 text-black text-lg font-semibold px-6 py-4 rounded-2xl shadow-md transition-all">
+        <button type="button" id="generateBtn" disabled
+                class="w-full bg-[#f9d22dff] dark:bg-yellow-500 hover:bg-yellow-400 text-black text-lg font-semibold px-6 py-4 rounded-2xl shadow-md transition-all">
           <span id="generateText">✨ Generate Personalized Plan</span>
-          <svg id="spinner" role="status" aria-hidden="true" class="animate-spin h-5 w-5 text-black hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <!-- Spinner displayed during API call -->
+          <svg id="spinner" role="status" aria-hidden="true"
+               class="animate-spin h-5 w-5 text-black hidden ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
           </svg>
         </button>
       </section>
+
+      <!-- Output textarea and PDF/print buttons -->
       <section aria-labelledby="output-plan">
         <h2 id="output-plan" class="block text-sm font-semibold mb-2">Suggested Follow-Up Plan</h2>
-        <textarea id="output" rows="8" class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-2xl bg-gray-100 dark:bg-gray-700 text-black dark:text-gray-100 focus:outline-none" aria-live="polite" readonly></textarea>
-        <button type="button" id="savePdfBtn" disabled class="mt-4 w-full bg-black dark:bg-gray-700 hover:bg-gray-900 dark:hover:bg-gray-600 text-white font-medium py-3 rounded-xl shadow focus:outline-none">
+        <textarea id="output" rows="8"
+                  class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-2xl bg-gray-100 dark:bg-gray-700 text-black dark:text-gray-100 focus:outline-none"
+                  aria-live="polite" readonly></textarea>
+        <button type="button" id="savePdfBtn" disabled
+                class="mt-4 w-full bg-black dark:bg-gray-700 hover:bg-gray-900 dark:hover:bg-gray-600 text-white font-medium py-3 rounded-xl shadow focus:outline-none">
           💾 Save Plan as PDF
+        </button>
+        <button type="button" id="printPdfBtn" disabled
+                class="mt-2 w-full bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 text-black dark:text-white font-medium py-3 rounded-xl shadow focus:outline-none">
+          🖨️ Print Plan
         </button>
       </section>
     </form>
   </main>
+
   <script>
-    // Knowledge base guidance
+    // ========== Knowledge Base Guidance ==========
+    // Maps each sessionType to its guiding instructions
     const knowledgeBase = {
       "General Flexibility": "Use PNF, dynamic, and static stretches. Focus on hips, hamstrings, shoulders. Include breathing and end-range holds.",
-      "Athletic Recovery": "Prioritize myofascial release, dynamic mobility drills, active recovery, and hydration cues post-exertion.",
-      "Injury Prevention": "Focus on strengthening weak links, activating stabilizers, improving joint range with stability under control.",
-      "Post-Surgery Rehab": "Begin with passive and assisted ROM, progress gradually to active mobility. Follow 4-week cycles and adjust based on medical clearance.",
-      "Low Back Relief": "Incorporate glute activation, core stability work, hamstring flexibility, and lumbar decompression techniques."
+      "Enhanced Flexibility": "Incorporate partner-assisted stretches and progressive overload in flexibility training. Monitor range improvements weekly.",
+      "Injury Prevention": "Focus on strengthening weak links, activating stabilizers, improving joint range with control and dynamic stability drills.",
+      "Pain Relief": "Include gentle myofascial release, targeted static holds, and neuromuscular inhibition techniques for pain reduction.",
+      "Faster Recovery": "Prioritize myofascial release, dynamic mobility drills, and active recovery methods post-exertion.",
+      "Improved Posture": "Integrate thoracic mobilizations, scapular stability work, and corrective stretching for postural alignment.",
+      "Personalized Sessions": "Tailor each session based on client feedback, mobility assessments, and progress metrics.",
+      "Stress Reduction": "Use diaphragmatic breathing, slow static holds, and gentle yoga-based stretches to reduce stress.",
+      "Enhanced Athletic Performance": "Combine sport-specific dynamic mobility workflows with proprioceptive neuromuscular facilitation.",
+      "Better Circulation": "Include rhythmic active movements and gradient stretching to stimulate blood flow.",
+      "Increased Energy Levels": "Incorporate full-body dynamic warm-ups and activation sequences to boost energy.",
+      "Mind–Body Connection": "Use mindful breathing, slow holds, and visualization techniques during stretches.",
+      "Safe, Low-Impact Care": "Emphasize controlled, joint-friendly mobilizations with appropriate progressions.",
+      "Pre-Workout Activation": "Integrate dynamic mobility drills to prime target muscle groups before exercise.",
+      "Post-Workout Cool-Down": "Use static stretches and myofascial release to support recovery post-exercise.",
+      "Pain-Free Movement in Daily Life": "Customize stretches to alleviate common daily movement restrictions.",
+      "Mobility for Desk Workers": "Target hip flexors, thoracic spine, and shoulder girdle to counteract sitting.",
+      "Complementary to Physical Therapy": "Follow PT protocols with added mobility and stability enhancements.",
+      "Expertise in Movement Mechanics": "Integrate biomechanical correction and end-range stabilization in each plan.",
+      "Goal-Oriented Programming": "Set weekly improvement targets and adjust plan based on measurable outcomes.",
+      "Consistent Accountability": "Schedule regular check-ins and progress reviews to keep clients on track."
     };
 
-    // SpeechRecognition setup
+    // ========== Speech Recognition Setup ==========
     let recognition;
     try {
+      // Define browser-specific constructors
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       recognition = new SpeechRecognition();
-      recognition.continuous = true;
-      recognition.interimResults = true;
-      recognition.lang = 'en-US';
+      recognition.continuous = true;   // keep capturing
+      recognition.interimResults = true; // get partial results
+      recognition.lang = 'en-US';      // set language
     } catch {
+      // Disable mic button and show warning if not supported
       document.getElementById('micBtn').disabled = true;
-      console.warn('SpeechRecognition not supported');
+      const warn = document.createElement('p');
+      warn.textContent = 'Voice input not supported in this browser.';
+      warn.className = 'text-red-500 text-sm mt-2';
+      document.getElementById('notes').after(warn);
     }
 
-    // Dark mode toggle
+    // ========== Dark Mode Persistence ==========
     document.getElementById('darkToggle').addEventListener('click', () => {
       const isDark = document.documentElement.classList.toggle('dark');
       localStorage.setItem('darkMode', isDark);
     });
     window.addEventListener('DOMContentLoaded', () => {
-      if (localStorage.getItem('darkMode') === 'true') document.documentElement.classList.add('dark');
-      ['clientName','clientDate','therapistName','progress'].forEach(id => {
+      // Apply saved dark-mode preference on load
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.documentElement.classList.add('dark');
+      }
+      // Restore saved form values
+      ['clientName','clientDate','therapistName','notes','progress'].forEach(id => {
         const val = localStorage.getItem(id);
         if (val) document.getElementById(id).value = val;
       });
       validateForm();
     });
 
-    // Form validation & persistence
-    const clientName = document.getElementById('clientName');
-    const clientDate = document.getElementById('clientDate');
+    // ========== Form Validation & Persistence ==========
+    const clientName    = document.getElementById('clientName');
+    const clientDate    = document.getElementById('clientDate');
     const therapistName = document.getElementById('therapistName');
-    const generateBtn = document.getElementById('generateBtn');
-    const savePdfBtn = document.getElementById('savePdfBtn');
-    const printPdfBtn = document.getElementById('printPdfBtn');
+    const notesEl       = document.getElementById('notes');
+    const progressEl    = document.getElementById('progress');
+    const generateBtn   = document.getElementById('generateBtn');
+    const savePdfBtn    = document.getElementById('savePdfBtn');
+    const printPdfBtn   = document.getElementById('printPdfBtn');
 
     function validateForm() {
+      // Enable generate button only when required fields are filled
       generateBtn.disabled = !(clientName.value.trim() && clientDate.value && therapistName.value);
     }
-    ['clientName','clientDate','therapistName','progress'].forEach(id => {
-      document.getElementById(id).addEventListener('input', e => {
-        localStorage.setItem(id, e.target.value);
+    // Persist inputs to localStorage on change
+    ['clientName','clientDate','therapistName','notes','progress'].forEach(id => {
+      document.getElementById(id).addEventListener('input', (e) => {
+        localStorage.setItem(id, e.target.value || '');
         validateForm();
       });
     });
 
-    // Microphone behavior
+    // ========== Voice Input Handling ==========
     const micBtnEl = document.getElementById('micBtn');
+    let finalTranscript = '';
     micBtnEl.addEventListener('click', () => {
       if (!recognition) return;
+      // Toggle listening state
       const listening = micBtnEl.classList.toggle('listening');
       micBtnEl.setAttribute('aria-pressed', listening);
       micBtnEl.querySelector('span').textContent = listening ? 'Listening…' : 'Start Voice Input';
       if (listening) {
+        finalTranscript = ''; // reset any previous transcript
         micBtnEl.classList.add('bg-yellow-200','text-black','animate-pulse');
         micBtnEl.classList.remove('bg-black','text-white');
         recognition.start();
@@ -176,125 +255,166 @@
       }
     });
     if (recognition) {
-      let finalTranscript = '';
       recognition.onresult = event => {
-        let interimTranscript = '';
+        let interim = '';
+        // Aggregate final vs interim transcripts
         for (let i = event.resultIndex; i < event.results.length; ++i) {
-          const transcript = event.results[i][0].transcript;
-          event.results[i].isFinal ? finalTranscript += transcript : interimTranscript += transcript;
+          const { transcript } = event.results[i][0];
+          event.results[i].isFinal ? finalTranscript += transcript : interim += transcript;
         }
-        document.getElementById('notes').value = finalTranscript + interimTranscript;
+        notesEl.value = finalTranscript + interim;
       };
       recognition.onend = () => {
+        // Auto-restart if still listening
         if (micBtnEl.classList.contains('listening')) recognition.start();
       };
     }
 
-    // PDF memory for print/save
-    let lastPdfDoc = null;
-
-    // PDF generation as a function
-    async function generatePdf() {
-      const { jsPDF } = await import('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
-      const doc = new jsPDF({ unit:'pt', format:'letter' });
-      const pw = doc.internal.pageSize.getWidth();
-      const ph = doc.internal.pageSize.getHeight();
-      const m = 40; const lh = 14;
-      // Logo
-      const logoUrl = 'https://res.cloudinary.com/dn1saqddq/image/upload/c_thumb,w_200,g_face/v1747813392/iflex_logo_publish_defngt.png';
-      const imgData = await getImageDataUrl(logoUrl);
-      const props = doc.getImageProperties(imgData);
-      const w = 100; const h = (props.height*w)/props.width;
-      doc.addImage(imgData,'PNG',(pw-w)/2,m,w,h);
-      let y = m + h + 20;
-      // Header
-      doc.setFontSize(16).text('iFlex Stretch Plan',m,y); y+=22;
-      doc.setFontSize(12).text(`Client: ${clientName.value}`,m,y); y+=16;
-      doc.text(`Date: ${new Date(clientDate.value).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}`,m,y); y+=16;
-      doc.text(`Therapist: ${therapistName.value}`,m,y); y+=24;
-      // Progress
-      if (document.getElementById('progress').value) {
-        doc.text('Progress Notes:',m,y); y+=16;
-        const lines = doc.splitTextToSize(document.getElementById('progress').value,pw-2*m);
-        lines.forEach(line => { if (y+lh>ph-m) {doc.addPage(); y=m;} doc.text(line,m,y); y+=lh; }); y+=20;
+    // ========== Image to DataURL Helper ==========
+    // Loads an image and converts to base64, with CORS handling and fallback
+    async function getImageDataUrl(url) {
+      try {
+        return await new Promise((res, rej) => {
+          const img = new Image(); img.crossOrigin = 'anonymous';
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width; canvas.height = img.height;
+            canvas.getContext('2d').drawImage(img, 0, 0);
+            res(canvas.toDataURL('image/png'));
+          };
+          img.onerror = rej;
+          img.src = url;
+        });
+      } catch {
+        console.warn('Logo load failed');
+        return null; // graceful degradation
       }
-      // Plan
-      doc.text('Plan:',m,y); y+=16;
-      const planLines = doc.splitTextToSize(document.getElementById('output').value,pw-2*m);
-      planLines.forEach(line => { if (y+lh>ph-m) {doc.addPage(); y=m;} doc.text(line,m,y); y+=lh; });
-      return doc;
     }
 
+    // ========== PDF Generation ==========
+    let lastPdfDoc = null;
+    function generatePdfSync() {
+      // Create a new jsPDF instance (letter size, points unit)
+      const doc = new window.jspdf.jsPDF({ unit:'pt', format:'letter' });
+      const pw = doc.internal.pageSize.getWidth();
+      const ph = doc.internal.pageSize.getHeight();
+      const margin = 40, lineHeight = 14;
+      let y = margin;
 
-    // Save PDF (Simple file download without external CDN import)
-    savePdfBtn.addEventListener('click', () => {
-      const outputText = document.getElementById('output').value;
-      const filename = clientName.value.trim()
-        ? `iFlex_Stretch_Plan_${clientName.value.trim().replace(/\s+/g, '_')}.txt`
-        : 'iFlex_Stretch_Plan.txt';
+      // Add logo if available
+      return getImageDataUrl(document.querySelector('header img').src)
+        .then(imgData => {
+          if (imgData) {
+            const props = doc.getImageProperties(imgData);
+            const imgWidth = 100;
+            const imgHeight = (props.height * imgWidth) / props.width;
+            doc.addImage(imgData, 'PNG', (pw - imgWidth) / 2, y, imgWidth, imgHeight);
+            y += imgHeight + 20;
+          }
 
-      const blob = new Blob([outputText], { type: 'text/plain;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+          // Add header text
+          doc.setFontSize(16).text('iFlex Stretch Plan', margin, y); y += lineHeight * 2;
+          doc.setFontSize(12)
+             .text(`Client: ${clientName.value}`, margin, y); y += lineHeight;
+          const dateStr = new Date(clientDate.value).toLocaleDateString('en-US',
+            { year: 'numeric', month: 'long', day: 'numeric' });
+          doc.text(`Date: ${dateStr}`, margin, y); y += lineHeight;
+          doc.text(`Therapist: ${therapistName.value}`, margin, y); y += lineHeight * 2;
+
+          // Add progress notes if present
+          if (progressEl.value) {
+            doc.text('Progress Notes:', margin, y); y += lineHeight;
+            doc.splitTextToSize(progressEl.value, pw - 2 * margin)
+              .forEach(line => {
+                if (y + lineHeight > ph - margin) { doc.addPage(); y = margin; }
+                doc.text(line, margin, y); y += lineHeight;
+              });
+            y += lineHeight;
+          }
+
+          // Add plan content
+          doc.text('Plan:', margin, y); y += lineHeight;
+          doc.splitTextToSize(document.getElementById('output').value, pw - 2 * margin)
+            .forEach(line => {
+              if (y + lineHeight > ph - margin) { doc.addPage(); y = margin; }
+              doc.text(line, margin, y); y += lineHeight;
+            });
+
+          lastPdfDoc = doc;
+          return doc;
+        });
+    }
+
+    // Save PDF file
+    document.getElementById('savePdfBtn').addEventListener('click', () => {
+      generatePdfSync().then(doc => {
+        const safeName = clientName.value.trim().replace(/\s+/g, '_') || 'plan';
+        doc.save(`iFlex_Stretch_Plan_${safeName}.pdf`);
+      });
     });
 
-    // Generate Plan event
+    // Print PDF in new window
+    document.getElementById('printPdfBtn').addEventListener('click', () => {
+      (lastPdfDoc ? Promise.resolve(lastPdfDoc) : generatePdfSync())
+        .then(doc => {
+          const url = doc.output('bloburl');
+          const printWin = window.open(url);
+          if (printWin) printWin.onload = () => printWin.print();
+        });
+    });
+
+    // ========== Plan Generation ==========
     document.getElementById('generateBtn').addEventListener('click', async () => {
+      // Gather form inputs
       const sessionType = document.getElementById('sessionType').value;
-      const noteText = document.getElementById('notes').value;
-      const name = clientName.value;
-      const therapist = therapistName.value;
-      const dateRaw = clientDate.value;
-      const formattedDate = isNaN(new Date(dateRaw)) ? '' : new Date(dateRaw).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
-      const progress = document.getElementById('progress').value;
-      const output = document.getElementById('output');
-      output.value = "Generating your customized 12-month iFlex stretch therapy plan...";
-      const guidance = knowledgeBase[sessionType] || '';
-      generateBtn.disabled = true; savePdfBtn.disabled = true; printPdfBtn.disabled = true;
-      generateBtn.setAttribute('aria-busy','true');
+      const notesText   = notesEl.value || '';
+      const client      = clientName.value;
+      const therapist   = therapistName.value;
+      const rawDate     = clientDate.value;
+      const formatted   = isNaN(new Date(rawDate))
+                          ? ''
+                          : new Date(rawDate).toLocaleDateString('en-US',
+                              { year:'numeric', month:'long', day:'numeric' });
+      const progress    = progressEl.value || '';
+      const outputEl    = document.getElementById('output');
+
+      // Provide user feedback during API call
+      outputEl.value = 'Generating your customized 12-month iFlex stretch therapy plan...';
+      generateBtn.disabled = true;
+      savePdfBtn.disabled  = true;
+      printPdfBtn.disabled = true;
       document.getElementById('generateText').classList.add('hidden');
       document.getElementById('spinner').classList.remove('hidden');
+
+      // Build prompt using knowledgeBase guidance
+      const guidance = knowledgeBase[sessionType] || '';
       try {
-        const res = await fetch('/api/generate-plan', {
-          method: 'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({ sessionType, notes:
-            `You are a certified stretch therapist at iFlex Stretch Studios. Create a comprehensive 12-month Stretch Plan for the client, broken down into 52 weekly sessions, with the goal of helping them achieve their flexibility and mobility goals. Use the guidance provided for '${sessionType}': ${guidance}, and incorporate any relevant information from the notes: '${noteText}'. Consider the client’s current progress: '${progress}', and personalize the plan for '${name}', with you as their therapist: '${therapist}', on the date '${formattedDate}'. Be sure to include a signature line at the bottom of the plan.'.` })
+        const response = await fetch('/api/generate-plan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionType,
+            notes: `You are a certified stretch therapist at iFlex. Use guidance for '${sessionType}': ${guidance}. Based on notes '${notesText}', progress '${progress}', client '${client}', therapist '${therapist}', date '${formatted}'.`
+          })
         });
-        const data = await res.json();
-        output.value = data.plan || 'Error generating plan.';
+        const data = await response.json();
+        outputEl.value = data.plan || 'Error generating plan.';
         if (data.plan) {
-          savePdfBtn.disabled = false;
+          // Enable save/print on success
+          savePdfBtn.disabled  = false;
           printPdfBtn.disabled = false;
-          lastPdfDoc = null; // Reset PDF cache for new plan
+          lastPdfDoc = null; // reset cache
         }
-      } catch (err) {
-        console.error(err);
-        output.value = '❗️ Couldn’t generate your plan. Try again later.';
+      } catch (error) {
+        console.error(error);
+        outputEl.value = '❗️ Couldn’t generate your plan. Try again later.';
       } finally {
+        // Restore button state
         generateBtn.disabled = false;
-        generateBtn.setAttribute('aria-busy','false');
         document.getElementById('generateText').classList.remove('hidden');
         document.getElementById('spinner').classList.add('hidden');
       }
     });
-
-    // Helper to load image as DataURL
-    async function getImageDataUrl(url) {
-      return new Promise((res, rej) => {
-        const img = new Image(); img.crossOrigin = 'anonymous';
-        img.onload = () => {
-          const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
-          c.getContext('2d').drawImage(img,0,0);
-          res(c.toDataURL('image/png'));
-        };
-        img.onerror = rej;
-        img.src = url;
-      });
-    }
   </script>
 </body>
 </html>
