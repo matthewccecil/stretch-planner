@@ -394,7 +394,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             sessionType,
-            notes: `You are a certified stretch therapist at iFlex. Use guidance for '${sessionType}': ${guidance}. Based on notes '${notesText}', progress '${progress}', client '${client}', therapist '${therapist}', date '${formatted}'.`
+            notes: `You are a certified stretch therapist at iFlex Stretch Studios. Create a comprehensive 12-month Stretch Plan for the client, broken down into 52 weekly sessions, with the goal of helping them achieve their flexibility and mobility goals. Use the guidance provided for '${sessionType}': ${guidance}, and incorporate any relevant information from the notes: '${noteText}'. Consider the client’s current progress: '${progress}', and personalize the plan for '${name}', with you as their therapist: '${therapist}', on the date '${formattedDate}'. Be sure to include a signature line at the bottom of the plan.'.`
           })
         });
         const data = await response.json();
