@@ -134,6 +134,7 @@
       <!-- Output textarea and PDF/print buttons -->
       <section aria-labelledby="output-plan">
         <h2 id="output-plan" class="block text-sm font-semibold mb-2">Suggested Follow-Up Plan</h2>
+        <p id="animated-text" class="text-center text-yellow-600 font-semibold mb-2"></p>
         <textarea id="output" rows="8"
                   class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-2xl bg-gray-100 dark:bg-gray-700 text-black dark:text-gray-100 focus:outline-none"
                   aria-live="polite" readonly></textarea>
@@ -379,7 +380,20 @@
       const outputEl    = document.getElementById('output');
 
       // Provide user feedback during API call
-      outputEl.value = 'Generating your customized 12-month iFlex stretch therapy plan...';
+      // Show animated text
+document.getElementById('animated-text').innerHTML = '';
+const text = 'Generating your customized 12-month iFlex stretch therapy plan...';
+let i = 0;
+const speed = 50;
+function typeWriter() {
+  if (i < text.length) {
+    document.getElementById('animated-text').innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeWriter, speed);
+  }
+}
+typeWriter();
+outputEl.value = '';
       generateBtn.disabled = true;
       savePdfBtn.disabled  = true;
       printPdfBtn.disabled = true;
