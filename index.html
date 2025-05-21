@@ -123,7 +123,7 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             sessionType,
-            notes: `You are a certified stretch therapist at iFlex. Use the following guidance for '${sessionType}': ${guidance}. Based on therapist notes '${notes}', progress notes '${progress}', client name '${clientName}', and session date '${formattedDate}', generate a detailed 12-month personalized plan for this client. Structure the plan by weeks (Week 1 through Week 52), showing what the client will experience each week during their in-person stretch therapy sessions. Be specific about stretch types, mobility goals, and how progression is tracked over time. Each week should have a purpose and a checkpoint. Keep the tone friendly, professional, and educational, as if this will be shared with the client directly.`
+            notes: `You are a certified stretch therapist at iFlex. Use the following guidance for '${sessionType}': ${guidance}. Based on therapist notes '${notes}', progress notes '${progress}', client name '${clientName}', and session date '${formattedDate}', generate a detailed 12 month personalized plan for this client. Structure the plan by weeks and do all 52 weeks in the year, showing what the client will experience each week during their in-person stretch therapy sessions. Be specific about stretch types, mobility goals, and how progression is tracked over time. Each week should have a purpose and a checkpoint. Keep the tone friendly, professional, and educational, as if this will be shared with the client directly.`
           })
         });
 
