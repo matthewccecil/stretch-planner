@@ -33,7 +33,7 @@
     <section aria-labelledby="title">
       <h1 id="title" class="text-4xl font-extrabold text-center">iFlex Stretch Planner</h1>
       <p class="text-center text-gray-600 dark:text-gray-300">
-        Create custom 12-month follow-up plans using voice notes or text input.
+        At the end of each session, quickly record a 12-month follow-up plan—either by voice note or text—divided into monthly milestones with clear flexibility and mobility goals. Go through the plan with your client before they leave, making sure they understand and agree. While they’re still in the studio, book their next stretch session by confirming the date and time. Finally, sign and date the plan, then send them a copy via their preferred method (email, text or voice) right away so they have it on hand.
       </p>
     </section>
 
@@ -109,7 +109,7 @@
   class="w-full p-3 border border-gray-300 rounded bg-white dark:bg-gray-700 text-black dark:text-white"></textarea>
   <button type="button" id="micBtn" aria-pressed="false" aria-label="Start voice input"
     class="mt-6 inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-xl shadow transition-all">
-    🎤 <span>Start Voice Input</span>
+    🎤 <span>Start Voice Input (Will Override Existing Text)</span>
   </button>
         </div>
       </section>
@@ -125,7 +125,7 @@
       <section aria-labelledby="actions">
         <button type="button" id="generateBtn" disabled
                 class="w-full bg-[#f9d22dff] dark:bg-yellow-500 hover:bg-yellow-400 text-black text-lg font-semibold px-6 py-4 rounded-2xl shadow-md transition-all">
-          <span id="generateText">✨ Generate Personalized Plan</span>
+          <span id="generateText">✨ Generate Personalized Follow Up Plan</span>
           <!-- Spinner displayed during API call -->
           <svg id="spinner" role="status" aria-hidden="true"
                class="animate-spin h-5 w-5 text-black hidden ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
