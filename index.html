@@ -438,6 +438,60 @@
         document.getElementById('spinner').classList.add('hidden');
       }
     });
+    <!-- Other HTML content -->
+
+<script>
+  // Generate Plan Button (with Confetti + Fun Thinking Animation)
+  const generateBtn = document.getElementById('generateBtn');
+  const generateText = document.getElementById('generateText');
+  const spinner = document.getElementById('spinner');
+  const output = document.getElementById('output');
+
+  const phrases = [
+    "🧠 Thinking...",
+    "📐 Putting together your plan...",
+    "🧘 Stretching the possibilities...",
+    "📋 Finalizing week-by-week structure...",
+    "✨ Almost ready..."
+  ];
+  let phraseIndex = 0;
+  let animationInterval;
+
+  generateBtn.addEventListener('click', async () => {
+    // Set button to busy
+    generateBtn.setAttribute('aria-busy', 'true');
+    generateBtn.disabled = true;
+    generateText.classList.add('hidden');
+    spinner.classList.remove('hidden');
+
+    // Start cycling phrases
+    output.value = phrases[phraseIndex];
+    animationInterval = setInterval(() => {
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      output.value = phrases[phraseIndex];
+    }, 800);
+
+    // Simulate delay (replace with real API call)
+    await new Promise(res => setTimeout(res, 4000));
+
+    // Stop animation and show final plan
+    clearInterval(animationInterval);
+    output.value = "✅ Your custom 12-month iFlex Stretch Plan is ready!";
+
+    // Re-enable button
+    spinner.classList.add('hidden');
+    generateText.classList.remove('hidden');
+    generateBtn.disabled = false;
+    generateBtn.setAttribute('aria-busy', 'false');
+
+    // Show confetti
+    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+
+    // Enable save button
+    savePdfBtn.disabled = false;
+  });
+</script>
+</body>
   </script>
 </body>
 </html>
