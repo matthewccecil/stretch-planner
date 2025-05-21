@@ -440,6 +440,26 @@ const noteTemplates = [
 `
 };
 
+// Populate dropdown dynamically
+const templateSelect = document.getElementById('progress-template-select');
+for (const key in progressTemplates) {
+  if (progressTemplates.hasOwnProperty(key)) {
+    const option = document.createElement('option');
+    option.value = key;
+    // Use the first line as display label, removing '## ' if present
+    option.textContent = progressTemplates[key].split('\n')[0].replace(/^##\s*/, '');
+    templateSelect.appendChild(option);
+  }
+}
+
+// Insert template text into textarea on selection
+templateSelect.addEventListener('change', function() {
+  const selected = this.value;
+  const textarea = document.getElementById('progress');
+  if (progressTemplates[selected]) {
+    textarea.value = progressTemplates[selected];
+  }
+});
 
 document.getElementById('progress-template-select').addEventListener('change', function() {
   const selected = this.value;
