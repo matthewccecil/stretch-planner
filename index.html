@@ -394,7 +394,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             sessionType,
-            notes: `You are a certified stretch therapist at iFlex. Write a 12 month plan for the client to help them achieve their flexibility and mobility goals. Break it down by month. Include how many times per week to come into iflex.  Use guidance for '${sessionType}': ${guidance}. Based on notes '${notesText}', progress '${progress}', client '${client}', therapist '${therapist}', date '${formatted}'.`
+            notes: `You are a certified stretch therapist at iFlex. You are writing a warm letter to a client after a session. Write a 12 month plan for the client to help them achieve their flexibility and mobility goals. Break it down by month. Include how many times per week to come into iflex. Add your signature at the bottom.  Use guidance for '${sessionType}': ${guidance}. Based on notes '${notesText}', progress '${progress}', client '${client}', therapist '${therapist}', date '${formatted}'.`
           })
         });
         const data = await response.json();
